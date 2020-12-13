@@ -19,16 +19,16 @@ export class PhonePlansController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.phonePlansService.findOne(+id);
+    return this.phonePlansService.findOne(id);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updatePhonePlanDto: UpdatePhonePlanDto) {
-    return this.phonePlansService.update(+id, updatePhonePlanDto);
+    return this.phonePlansService.update(id, updatePhonePlanDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.phonePlansService.remove(+id);
+    return this.phonePlansService.remove(id);
   }
 }

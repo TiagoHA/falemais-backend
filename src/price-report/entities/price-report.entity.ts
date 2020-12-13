@@ -13,10 +13,10 @@ export class PriceReport extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'uuid' })
   phonePlansId: number;
 
-  @Column()
+  @Column({ type: 'uuid' })
   rateId: number;
 
   @CreateDateColumn()
