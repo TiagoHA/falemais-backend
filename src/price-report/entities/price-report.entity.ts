@@ -1,11 +1,14 @@
+import { PhonePlan } from 'src/phone-plans/entities/phone-plan.entity';
+import { Rate } from 'src/rate/entities/rate.entity';
 import {
   BaseEntity,
   Entity,
-  Unique,
   PrimaryGeneratedColumn,
-  Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
 } from 'typeorm';
 
 @Entity('price_report')
@@ -13,15 +16,20 @@ export class PriceReport extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'uuid' })
-  phonePlansId: number;
+  @Column({ name: 'minutes_spent', default: 0 })
+  minutesSpent: number;
 
-  @Column({ type: 'uuid' })
-  rateId: number;
+  @JoinColumn({ name: 'phone_plan_id' })
+  @ManyToOne(() => PhonePlan, (plan) => plan.id, { eager: true })
+  phonePlan: PhonePlan;
 
-  @CreateDateColumn()
+  @JoinColumn({ name: 'rate_id' })
+  @ManyToOne(() => Rate, (rate) => rate.id, { eager: true })
+  rate: Rate;
+
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

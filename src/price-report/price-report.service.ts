@@ -1,26 +1,52 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { PRICE_REPORT_REPOSITORY } from 'src/database/database.constants';
+import { Repository } from 'typeorm';
 import { CreatePriceReportDto } from './dto/create-price-report.dto';
 import { UpdatePriceReportDto } from './dto/update-price-report.dto';
+import { PriceReport } from './entities/price-report.entity';
 
 @Injectable()
 export class PriceReportService {
-  create(createPriceReportDto: CreatePriceReportDto) {
-    return 'This action adds a new priceReport';
+  constructor(
+    @Inject(PRICE_REPORT_REPOSITORY)
+    private priceReportRepository: Repository<PriceReport>,
+  ) {}
+
+  async findAll() {
+    return this.priceReportRepository.find();
   }
 
-  findAll() {
-    return `This action returns all priceReport`;
+  async findOne(id: string) {
+    try {
+      const report = await this.priceReportRepository.findOne(id);
+
+      if (!report) throw 'id not found';
+
+      return report;
+    } catch (error) {
+      throw new HttpException('No price report with this id found', HttpStatus.NOT_FOUND);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} priceReport`;
+  async create(priceReport: CreatePriceReportDto) {
+    try {
+      const report = await this.priceReportRepository.create(priceReport);
+      return await this.priceReportRepository.save(report);
+    } catch (error) {
+      console.log('dbg ~ PriceReportService ~ create ~ error', error);
+      throw new HttpException('rate id or phoneplan id sent dont match', HttpStatus.NOT_FOUND);
+    }
   }
 
-  update(id: number, updatePriceReportDto: UpdatePriceReportDto) {
-    return `This action updates a #${id} priceReport`;
+  async update(id: string, priceReport: UpdatePriceReportDto) {
+    const report = await this.findOne(id);
+    await this.priceReportRepository.update(id, report);
+    return { ...report, ...priceReport };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} priceReport`;
+  async remove(id: string) {
+    const report = await this.findOne(id);
+    await this.priceReportRepository.delete(id);
+    return report;
   }
 }

@@ -7,11 +7,6 @@ import { UpdatePriceReportDto } from './dto/update-price-report.dto';
 export class PriceReportController {
   constructor(private readonly priceReportService: PriceReportService) {}
 
-  @Post()
-  create(@Body() createPriceReportDto: CreatePriceReportDto) {
-    return this.priceReportService.create(createPriceReportDto);
-  }
-
   @Get()
   findAll() {
     return this.priceReportService.findAll();
@@ -19,16 +14,21 @@ export class PriceReportController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.priceReportService.findOne(+id);
+    return this.priceReportService.findOne(id);
+  }
+
+  @Post()
+  create(@Body() priceReport: CreatePriceReportDto) {
+    return this.priceReportService.create(priceReport);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updatePriceReportDto: UpdatePriceReportDto) {
-    return this.priceReportService.update(+id, updatePriceReportDto);
+  update(@Param('id') id: string, @Body() priceReport: UpdatePriceReportDto) {
+    return this.priceReportService.update(id, priceReport);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.priceReportService.remove(+id);
+    return this.priceReportService.remove(id);
   }
 }
