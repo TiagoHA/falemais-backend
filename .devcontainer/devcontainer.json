@@ -33,7 +33,8 @@
     "chakrounanas.turbo-console-log",
     "visualstudioexptteam.vscodeintellicode",
     "gruntfuggly.todo-tree",
-    "vtrois.gitmoji-vscode"
+    "vtrois.gitmoji-vscode",
+    "mhutchie.git-graph"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
