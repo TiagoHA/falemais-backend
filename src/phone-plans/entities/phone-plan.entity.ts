@@ -1,4 +1,13 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { PriceReport } from 'src/price-report/entities/price-report.entity';
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 
 @Entity('phone_plans')
 export class PhonePlan extends BaseEntity {
@@ -11,12 +20,18 @@ export class PhonePlan extends BaseEntity {
   @Column({ default: 0 })
   minutes: number;
 
-  @Column('decimal', { precision: 12, scale: 2 })
-  price: number;
+  @Column('decimal', { name: 'initial_cost', precision: 12, scale: 2, default: '0.0' })
+  initialCost: number;
 
-  @CreateDateColumn()
+  @Column('decimal', { name: 'percentage_additional_minute_cost', precision: 12, scale: 2, default: '10.0' })
+  percentageAdditionalMinuteCost: number;
+
+  @OneToMany((type) => PriceReport, (report) => report.rate)
+  report: PriceReport[];
+
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

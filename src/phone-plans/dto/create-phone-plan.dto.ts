@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsInt, Min, MinLength, IsDecimal } from 'class-validator';
+import { IsString, IsNotEmpty, IsInt, Min, MinLength, IsDecimal, IsOptional } from 'class-validator';
 
 export class CreatePhonePlanDto {
   @IsString()
@@ -12,6 +12,10 @@ export class CreatePhonePlanDto {
   readonly minutes: number;
 
   @IsDecimal()
-  @IsNotEmpty()
-  readonly price: number;
+  @IsOptional()
+  readonly initialCost: number;
+
+  @IsDecimal()
+  @IsOptional()
+  readonly percentageAdditionalMinuteCost: number;
 }

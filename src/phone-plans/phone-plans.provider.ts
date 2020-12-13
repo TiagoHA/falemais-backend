@@ -1,5 +1,5 @@
 import { DATABASE_CONNECTION, PHONE_PLANS_REPOSITORY } from 'src/database/database.constants';
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
 import { PhonePlan } from './entities/phone-plan.entity';
 
 export const phonePlansProviders = [

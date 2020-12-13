@@ -1,5 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { error } from 'console';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { PHONE_PLANS_REPOSITORY } from 'src/database/database.constants';
 import { Repository } from 'typeorm';
 import { CreatePhonePlanDto } from './dto/create-phone-plan.dto';
@@ -13,6 +12,28 @@ export class PhonePlansService {
     private phonePlansRepository: Repository<PhonePlan>,
   ) {}
 
+  async findAll(): Promise<PhonePlan[]> {
+    const plans = await this.phonePlansRepository.find();
+
+    return plans;
+  }
+
+  async findOne(id: string) {
+    try {
+      const plan = await this.phonePlansRepository.findOne(id);
+
+      if (!plan) throw 'id not found';
+
+      return plan;
+    } catch (error) {
+      throw new HttpException('No phone plan with this id found', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  // private async calcValuesPlan (plan: PhonePlan) {
+  //   const finalPlan =
+  // }
+
   async create(phonePlan: CreatePhonePlanDto) {
     const findedPlan = await this.phonePlansRepository.findOne({ name: phonePlan.name });
 
@@ -22,22 +43,6 @@ export class PhonePlansService {
 
     const plan = this.phonePlansRepository.create(phonePlan);
     return await this.phonePlansRepository.save(plan);
-  }
-
-  async findAll(): Promise<PhonePlan[]> {
-    return await this.phonePlansRepository.find();
-  }
-
-  async findOne(id: string) {
-    try {
-      const plan = await this.phonePlansRepository.findOne(id);
-
-      if (!plan) throw error;
-
-      return plan;
-    } catch (error) {
-      throw new HttpException('No phone plan with this id found', HttpStatus.NOT_FOUND);
-    }
   }
 
   async update(id: string, phonePlan: UpdatePhonePlanDto) {
