@@ -8,6 +8,7 @@ const typeOrmOptions: TypeOrmModuleOptions = {
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
+  synchronize: process.env.DATABASE_SYNC === 'true',
   entities: [resolve(__dirname, '..', '..', 'modules', '**', 'entity', '*.entity.{ts,js}')],
   migrations: [resolve(__dirname, '..', 'migrations', '*.{ts,js}')],
   cli: {
