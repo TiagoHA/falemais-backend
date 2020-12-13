@@ -19,16 +19,16 @@ export class RateController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.rateService.findOne(+id);
+    return this.rateService.findOne(id);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateRateDto: UpdateRateDto) {
-    return this.rateService.update(+id, updateRateDto);
+    return this.rateService.update(id, updateRateDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.rateService.remove(+id);
+    return this.rateService.remove(id);
   }
 }
