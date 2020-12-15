@@ -39,7 +39,7 @@
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [3000, 5432, 46635],
+  "forwardPorts": [3000, 3333, 5432, 46635],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "npm i -g @nestjs/cli",
