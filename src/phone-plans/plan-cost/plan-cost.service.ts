@@ -19,7 +19,7 @@ export class PlanCostService {
     const { minutesSpent, rate } = report;
 
     const result = minutesSpent * rate?.price;
-    return result;
+    return result.toFixed(2);
   }
 
   private withPlan(report: PriceReport) {
@@ -29,11 +29,11 @@ export class PlanCostService {
       rate: { price },
     } = report;
 
-    if (!minutes || minutesSpent < minutes) return 0;
+    if (!minutes || minutesSpent < minutes) return '0.00';
 
     const additionalMinutes = minutesSpent - minutes;
     const percentageCost = percentageAdditionalMinuteCost / 100 + 1;
     const result = additionalMinutes * (price * percentageCost);
-    return result;
+    return result.toFixed(2);
   }
 }

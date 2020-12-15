@@ -29,9 +29,9 @@ export class PhonePlan extends BaseEntity {
   @OneToMany((type) => PriceReport, (report) => report.rate)
   report: PriceReport[];
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', select: false })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updated_at', select: false })
   updatedAt: Date;
 }
